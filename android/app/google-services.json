@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "942373727179",
+    "project_id": "isho-task",
+    "storage_bucket": "isho-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942373727179:android:1a608bfb5cdbf497e4a44e",
+        "android_client_info": {
+          "package_name": "com.afroz.task_for_isho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942373727179-sfr4nsbmjn2bn5kmgjjsvm3jni0o0uga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFsGtqAk1P27PZW8S-3elccLZXYfilT6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942373727179-sfr4nsbmjn2bn5kmgjjsvm3jni0o0uga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
