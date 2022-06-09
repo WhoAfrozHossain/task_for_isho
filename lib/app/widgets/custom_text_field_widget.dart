@@ -89,7 +89,9 @@ class CustomTextFieldWidget extends StatelessWidget {
         labelText: addHint
             ? null
             : ((controller?.text != null || !readOnly) ? labelText : null),
+        labelStyle: const TextStyle(color: AppColors.doveGray),
         hintText: hintText,
+        hintStyle: const TextStyle(color: AppColors.doveGray),
         prefixIconConstraints: BoxConstraints(
           maxHeight: 40.h,
           maxWidth: 40.w,

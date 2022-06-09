@@ -29,6 +29,13 @@
             {
               "client_id": "942373727179-sfr4nsbmjn2bn5kmgjjsvm3jni0o0uga.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "942373727179-une0etfo9jnluv3iqb4fnhd7k5tpr7kv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.afroz.taskForIsho"
+              }
             }
           ]
         }

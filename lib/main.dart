@@ -6,6 +6,7 @@ import 'package:task_for_isho/app/common/util/initializer.dart';
 import 'package:task_for_isho/app/common/values/strings.dart';
 import 'package:task_for_isho/app/common/values/styles/theme.dart';
 import 'package:task_for_isho/app/routes/app_pages.dart';
+import 'package:task_for_isho/features/auth/bindings/auth_binding.dart';
 
 void main() {
   Initializer.instance.init(() {
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       builder: BotToastInit(),
       navigatorObservers: [BotToastNavigatorObserver()],
       initialRoute: AppPages.INITIAL,
+      initialBinding: AuthBinding(),
       getPages: AppPages.routes,
     );
   }

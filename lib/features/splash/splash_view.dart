@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:task_for_isho/app/common/constants.dart';
 import 'package:task_for_isho/app/common/util/exports.dart';
-import 'package:task_for_isho/app/routes/app_pages.dart';
+import 'package:task_for_isho/features/auth/controllers/auth_controller.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -12,12 +11,14 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  AuthController authController = Get.put(AuthController());
+
   @override
   void initState() {
     super.initState();
 
     Future.delayed(const Duration(seconds: 3), () async {
-      Get.offAndToNamed(Routes.LOGIN);
+      authController.checkLoginStatus(true);
     });
   }
 
@@ -30,7 +31,9 @@ class _SplashViewState extends State<SplashView> {
           widthFactor: .5,
           child: SizedBox(
             width: Get.width,
-            child: const FlutterLogo(),
+            child: const FlutterLogo(
+              size: 500,
+            ),
           ),
         ),
       ),

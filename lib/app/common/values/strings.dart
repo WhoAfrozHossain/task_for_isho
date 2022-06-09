@@ -21,9 +21,11 @@ class Strings {
   static const String signIn = 'Sign in';
   static const String signUp = 'Sign up';
   static const String forgetPassword = 'Forgot password?';
+  static const String backToSignIn = 'Back to sign in';
 
   static const String cantBeEmpty = "can't be empty.";
   static const String fieldCantBeEmpty = 'Field $cantBeEmpty';
+  static const String name = 'Name';
   static const String emailAddress = 'Email address';
   static const String mobileNumber = 'Mobile number';
   static const String emailOrMobile = '$emailAddress or $mobileNumber';
@@ -42,4 +44,9 @@ class Strings {
   static const confirmPasswordValidation =
       '$password and $confirmPassword password should be same.';
   static const String signInToContinue = 'Sign in to continue';
+  static const String createAccount = 'Create new account';
+  static const String resetYourPassword = 'Reset your password';
+  static const String resetPassword = 'Reset password';
+
+  static const String propertyList = 'Property List';
 }
