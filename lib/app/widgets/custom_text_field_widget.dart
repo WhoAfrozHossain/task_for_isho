@@ -16,13 +16,13 @@ class CustomTextFieldWidget extends StatelessWidget {
   final bool readOnly, addHint, enabled;
   final bool? isDense;
   final Function()? onTap;
-  final InputBorder? border;
+  InputBorder? border;
   final AutovalidateMode autovalidateMode;
   final BoxConstraints? suffixIconConstraints;
   final EdgeInsets? prefixIconPadding;
   final Color? fillColor;
 
-  const CustomTextFieldWidget({
+  CustomTextFieldWidget({
     Key? key,
     this.labelText,
     this.hintText,
@@ -58,6 +58,10 @@ class CustomTextFieldWidget extends StatelessWidget {
       fontSize: Dimens.fontSize15,
     );
 
+    border ??= const OutlineInputBorder(
+      borderSide: BorderSide(color: AppColors.kPrimaryColor, width: 1.0),
+    );
+
     return TextFormField(
       onTap: onTap,
       readOnly: readOnly,
@@ -80,12 +84,12 @@ class CustomTextFieldWidget extends StatelessWidget {
             ],
       decoration: InputDecoration(
         fillColor: fillColor,
+        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         filled: fillColor != null,
         isDense: isDense,
         border: border,
         enabledBorder: border,
         focusedBorder: border,
-        // alignLabelWithHint: maxLines == null,
         labelText: addHint
             ? null
             : ((controller?.text != null || !readOnly) ? labelText : null),

@@ -48,7 +48,7 @@ class Login extends GetView<AuthController> {
                   child: Column(
                     children: [
                       Container(
-                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                        // margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                         child: CustomTextFieldWidget(
                           controller: controller.emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -63,7 +63,7 @@ class Login extends GetView<AuthController> {
                       ),
                       Obx(
                         () => Container(
-                          margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          // margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                           child: PasswordFieldWidget(
                             controller: controller.passwordController,
                             obscureText: controller.passwordObsecure.value,

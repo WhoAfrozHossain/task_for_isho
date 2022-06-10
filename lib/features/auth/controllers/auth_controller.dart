@@ -7,8 +7,8 @@ import 'package:task_for_isho/app/common/util/exports.dart';
 import 'package:task_for_isho/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -27,7 +27,7 @@ class AuthController extends GetxController {
   }
 
   void checkLoginStatus(bool canRouteChange) {
-    if (_auth.currentUser != null) {
+    if (auth.currentUser != null) {
       Get.offAllNamed(AppPages.PROPERTY_LIST);
     } else {
       if (canRouteChange) Get.offAllNamed(AppPages.LOGIN);
@@ -36,7 +36,7 @@ class AuthController extends GetxController {
 
   void onLoginClick() async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
@@ -104,18 +104,15 @@ class AuthController extends GetxController {
 
     if (message.isEmpty) {
       try {
-        await _auth
+        await auth
             .createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         )
             .then((value) async {
           try {
-            await _fireStore
-                .collection("users")
-                .doc(_auth.currentUser?.uid)
-                .set({
-              'id': _auth.currentUser?.uid ?? "",
+            await fireStore.collection("users").doc(auth.currentUser?.uid).set({
+              'id': auth.currentUser?.uid ?? "",
               'name': nameController.text,
               'email': emailController.text,
             });
@@ -140,7 +137,7 @@ class AuthController extends GetxController {
 
   void onForgetPasswordClick() async {
     try {
-      await _auth.sendPasswordResetEmail(email: emailController.text);
+      await auth.sendPasswordResetEmail(email: emailController.text);
 
       showSuccessToast('Successfully mail sended');
 
@@ -153,7 +150,7 @@ class AuthController extends GetxController {
 
   void signOut() async {
     try {
-      await _auth.signOut();
+      await auth.signOut();
 
       showSuccessToast('Successfully signed out');
 

@@ -283,6 +283,7 @@ class Utils {
   }
 
   static Future<File?> getImage({int source = 1}) async {
+    File? image;
     CroppedFile? croppedFile;
     final picker = ImagePicker();
 
@@ -291,33 +292,34 @@ class Utils {
     );
 
     if (pickedFile != null) {
-      final image = File(pickedFile.path);
+      image = File(pickedFile.path);
 
-      croppedFile = await ImageCropper().cropImage(
-        sourcePath: image.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarColor: Colors.transparent,
-            toolbarWidgetColor: Colors.transparent,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            minimumAspectRatio: 0.1,
-            aspectRatioLockDimensionSwapEnabled: true,
-          ),
-        ],
-      );
+      // croppedFile = await ImageCropper().cropImage(
+      //   sourcePath: image.path,
+      //   aspectRatioPresets: [
+      //     CropAspectRatioPreset.square,
+      //     CropAspectRatioPreset.ratio3x2,
+      //     CropAspectRatioPreset.original,
+      //     CropAspectRatioPreset.ratio4x3,
+      //     CropAspectRatioPreset.ratio16x9
+      //   ],
+      //   uiSettings: [
+      //     AndroidUiSettings(
+      //       toolbarColor: Colors.transparent,
+      //       toolbarWidgetColor: Colors.transparent,
+      //       initAspectRatio: CropAspectRatioPreset.original,
+      //       lockAspectRatio: false,
+      //     ),
+      //     IOSUiSettings(
+      //       minimumAspectRatio: 0.1,
+      //       aspectRatioLockDimensionSwapEnabled: true,
+      //     ),
+      //   ],
+      // );
     }
 
-    File file = File.fromRawPath(await croppedFile!.readAsBytes());
+    // File file = File.fromRawPath(await croppedFile!.readAsBytes());
+    File file = image!;
 
     return file;
   }

@@ -69,7 +69,7 @@ class CustomImageWidget extends StatelessWidget {
                   errorBuilder: (context, error, stackTrace) {
                     return placeholder;
                   },
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                   width: Get.width,
                   // width: size?.width.w,
                   // height: height?.w ?? size?.height.w,
@@ -80,7 +80,7 @@ class CustomImageWidget extends StatelessWidget {
                       File(imageUrl!),
                       width: size?.width.w,
                       height: height?.w ?? size?.height.w,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitWidth,
                     )
                   : placeholder));
 

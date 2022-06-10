@@ -4,6 +4,7 @@ import 'package:task_for_isho/features/auth/views/forget_password.dart';
 import 'package:task_for_isho/features/auth/views/login.dart';
 import 'package:task_for_isho/features/auth/views/registration.dart';
 import 'package:task_for_isho/features/property/bindings/property_binding.dart';
+import 'package:task_for_isho/features/property/views/add_property.dart';
 import 'package:task_for_isho/features/property/views/property_list.dart';
 import '../../features/splash/splash_view.dart';
 
@@ -17,6 +18,7 @@ class AppPages {
   static const REGISTRATION = Routes.REGISTRATION;
   static const FORGET_PASSWORD = Routes.FORGET_PASSWORD;
   static const PROPERTY_LIST = Routes.PROPERTY_LIST;
+  static const ADD_PROPERTY = Routes.ADD_PROPERTY;
 
   static final routes = [
     GetPage(
@@ -43,6 +45,12 @@ class AppPages {
     GetPage(
       name: _Paths.PROPERTY_LIST,
       page: () => const PropertyList(),
+      binding: PropertyBinding(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: _Paths.ADD_PROPERTY,
+      page: () => const AddProperty(),
       binding: PropertyBinding(),
       transition: Transition.fade,
     ),

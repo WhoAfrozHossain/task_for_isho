@@ -17,6 +17,7 @@ class Strings {
   static const gallery = 'Gallery';
   static const camera = 'Camera';
   static const success = 'Success';
+  static const submit = 'Submit';
 
   static const String signIn = 'Sign in';
   static const String signUp = 'Sign up';
@@ -49,4 +50,13 @@ class Strings {
   static const String resetPassword = 'Reset password';
 
   static const String propertyList = 'Property List';
+  static const String addProperty = 'Add Property';
+  static const String propertyName = 'Property Name';
+  static const String propertyRent = 'Property Rent';
+  static const String selectYourPropertyLocation =
+      'Select your property location';
+  static const String addMore = 'Add more';
+  static const String uploadPhotos = 'Upload photos';
+  static const String selectedImages = 'Selected Images';
+  static const String noImageSelected = 'No image selected';
 }
