@@ -8,20 +8,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sslcommerz/model/SSLCAdditionalInitializer.dart';
-import 'package:flutter_sslcommerz/model/SSLCCustomerInfoInitializer.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
-import 'package:flutter_sslcommerz/model/SSLCShipmentInfoInitializer.dart';
 import 'package:flutter_sslcommerz/model/SSLCTransactionInfoModel.dart';
 import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
 import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
-import 'package:flutter_sslcommerz/model/sslproductinitilizer/General.dart';
-import 'package:flutter_sslcommerz/model/sslproductinitilizer/SSLCProductInitializer.dart';
 import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:get/get.dart';
 import 'package:task_for_isho/app/common/constants.dart';
+import 'package:task_for_isho/app/models/property_model.dart';
 import 'package:task_for_isho/app/models/user_model.dart';
+import 'package:task_for_isho/app/routes/app_pages.dart';
 import 'package:task_for_isho/features/auth/controllers/auth_controller.dart';
 
 class PropertyController extends GetxController {
@@ -34,6 +31,9 @@ class PropertyController extends GetxController {
   TextEditingController rentController = TextEditingController();
 
   var user = UserModel().obs;
+  var properties = [].obs;
+
+  var selectedProperty = PropertyModel().obs;
 
   List<String> propertyImage = [];
   List<String> selectedImage = [];
@@ -43,10 +43,7 @@ class PropertyController extends GetxController {
 
   Completer<GoogleMapController> mapController = Completer();
 
-  final CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14,
-  );
+  CameraPosition? kGooglePlex;
 
   @override
   onInit() {
@@ -56,8 +53,15 @@ class PropertyController extends GetxController {
     getDeviceLocation();
 
     getUserData();
+    getPropertyList();
 
     super.onInit();
+  }
+
+  void selectProperty(PropertyModel item) {
+    selectedProperty(item);
+
+    Get.toNamed(AppPages.VIEW_PROPERTY);
   }
 
   void getUserData() async {
@@ -76,6 +80,26 @@ class PropertyController extends GetxController {
     } catch (e) {
       print(e);
       rethrow;
+    }
+  }
+
+  Future getPropertyList() async {
+    properties([]);
+    try {
+      await _firestore
+          .collection('property')
+          .where('user_id', isEqualTo: _auth.currentUser?.uid)
+          .orderBy('time', descending: true)
+          .get()
+          .then((value) {
+        value.docs.forEach((element) {
+          PropertyModel item = PropertyModel.fromDocumentSnapshot(element);
+          properties.add(item);
+        });
+        return value.docs[0];
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -142,6 +166,11 @@ class PropertyController extends GetxController {
   }
 
   Future<void> goToTheLake() async {
+    kGooglePlex ??= CameraPosition(
+      target: currentLocation.value,
+      zoom: 14,
+    );
+
     final GoogleMapController controller = await mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: currentLocation.value,
@@ -224,6 +253,7 @@ class PropertyController extends GetxController {
 
         Get.back();
 
+        getPropertyList();
         getDeviceLocation();
       });
     } catch (e) {

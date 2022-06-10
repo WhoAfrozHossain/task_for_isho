@@ -9,6 +9,7 @@ abstract class Routes {
   static const FORGET_PASSWORD = _Paths.FORGET_PASSWORD;
   static const PROPERTY_LIST = _Paths.PROPERTY_LIST;
   static const ADD_PROPERTY = _Paths.ADD_PROPERTY;
+  static const VIEW_PROPERTY = _Paths.VIEW_PROPERTY;
 }
 
 abstract class _Paths {
@@ -18,4 +19,5 @@ abstract class _Paths {
   static const FORGET_PASSWORD = '/forget_password';
   static const PROPERTY_LIST = '/property_list';
   static const ADD_PROPERTY = '/add_property';
+  static const VIEW_PROPERTY = '/view_property';
 }

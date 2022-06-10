@@ -51,6 +51,7 @@ class Strings {
 
   static const String propertyList = 'Property List';
   static const String addProperty = 'Add Property';
+  static const String viewProperty = 'View Property';
   static const String propertyName = 'Property Name';
   static const String propertyRent = 'Property Rent';
   static const String selectYourPropertyLocation =

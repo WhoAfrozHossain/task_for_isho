@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,7 +12,6 @@ import 'package:task_for_isho/app/widgets/custom_text_button.dart';
 import 'package:task_for_isho/app/widgets/custom_text_field_widget.dart';
 import 'package:task_for_isho/app/widgets/custom_text_widget.dart';
 import 'package:task_for_isho/features/property/controllers/property_controller.dart';
-import 'package:task_for_isho/features/property/widgets/property_item_widget.dart';
 
 class AddProperty extends GetView<PropertyController> {
   const AddProperty({Key? key}) : super(key: key);
@@ -163,7 +164,13 @@ class AddProperty extends GetView<PropertyController> {
                         width: Get.width,
                         child: GoogleMap(
                           mapType: MapType.normal,
-                          initialCameraPosition: controller.kGooglePlex,
+                          initialCameraPosition: controller.kGooglePlex!,
+                          gestureRecognizers:
+                              <Factory<OneSequenceGestureRecognizer>>[
+                            new Factory<OneSequenceGestureRecognizer>(
+                              () => new EagerGestureRecognizer(),
+                            ),
+                          ].toSet(),
                           markers: <Marker>{
                             Marker(
                               markerId: const MarkerId('SomeId'),

@@ -39,30 +39,32 @@ class PropertyList extends GetView<PropertyController> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Obx(() => CustomTextWidget(
-                    text: "Welcome ${controller.user.value.name ?? ""}",
-                    color: AppColors.black,
-                    fontWeight: FontWeight.w500,
-                  )),
+          child: Obx(
+            () => Column(children: [
+              CustomTextWidget(
+                text: "Welcome ${controller.user.value.name ?? ""}",
+                color: AppColors.black,
+                fontWeight: FontWeight.w500,
+              ),
               const CustomSpaceWidget(
                 height: 20,
               ),
               ListView.separated(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                itemCount: 20,
+                itemCount: controller.properties.value.length,
                 separatorBuilder: (_, index) {
                   return const CustomSpaceWidget(
                     height: 15,
                   );
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  return const PropertyItemWidget();
+                  return PropertyItemWidget(
+                    item: controller.properties[index],
+                  );
                 },
               ),
-            ],
+            ]),
           ),
         ),
       ),

@@ -54,6 +54,7 @@ dependencies:
   flutter_sslcommerz: ^2.1.1-nullsafety.0
   google_maps_flutter: ^2.1.7
   geolocator: ^8.2.1
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:
