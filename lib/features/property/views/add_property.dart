@@ -38,7 +38,7 @@ class AddProperty extends GetView<PropertyController> {
                     labelText: Strings.propertyName,
                     isDense: true,
                   ),
-                  CustomSpaceWidget(
+                  const CustomSpaceWidget(
                     height: 10,
                   ),
                   CustomTextFieldWidget(
@@ -47,7 +47,7 @@ class AddProperty extends GetView<PropertyController> {
                     labelText: Strings.propertyRent,
                     isDense: true,
                   ),
-                  CustomSpaceWidget(
+                  const CustomSpaceWidget(
                     height: 10,
                   ),
                   Row(
@@ -77,7 +77,7 @@ class AddProperty extends GetView<PropertyController> {
                           : Container(),
                     ],
                   ),
-                  CustomSpaceWidget(
+                  const CustomSpaceWidget(
                     height: 10,
                   ),
                   controller.totalImage.value == 0
@@ -88,7 +88,7 @@ class AddProperty extends GetView<PropertyController> {
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +99,7 @@ class AddProperty extends GetView<PropertyController> {
                                 fontSize: Dimens.fontSize14,
                                 align: TextAlign.center,
                               ),
-                              CustomSpaceWidget(
+                              const CustomSpaceWidget(
                                 height: 10,
                               ),
                               CustomInkwellWidget(
@@ -119,9 +119,9 @@ class AddProperty extends GetView<PropertyController> {
                         )
                       : GridView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: .9,
                             crossAxisCount: 3,
                             mainAxisSpacing: 10,
@@ -143,7 +143,7 @@ class AddProperty extends GetView<PropertyController> {
                                     onPressed: () {
                                       controller.removePropertyImages(index);
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.cancel,
                                       color: Colors.red,
                                     ),
@@ -153,7 +153,7 @@ class AddProperty extends GetView<PropertyController> {
                             );
                           },
                         ),
-                  CustomSpaceWidget(
+                  const CustomSpaceWidget(
                     height: 10,
                   ),
                   ClipRRect(
@@ -166,11 +166,11 @@ class AddProperty extends GetView<PropertyController> {
                           mapType: MapType.normal,
                           initialCameraPosition: controller.kGooglePlex!,
                           gestureRecognizers:
-                              <Factory<OneSequenceGestureRecognizer>>[
-                            new Factory<OneSequenceGestureRecognizer>(
-                              () => new EagerGestureRecognizer(),
+                              <Factory<OneSequenceGestureRecognizer>>{
+                            Factory<OneSequenceGestureRecognizer>(
+                              () => EagerGestureRecognizer(),
                             ),
-                          ].toSet(),
+                          },
                           markers: <Marker>{
                             Marker(
                               markerId: const MarkerId('SomeId'),
@@ -185,11 +185,11 @@ class AddProperty extends GetView<PropertyController> {
                       ),
                     ),
                   ),
-                  CustomSpaceWidget(
+                  const CustomSpaceWidget(
                     height: 30,
                   ),
                   CustomTextButton(
-                    onPressed: controller.sslCommerzGeneralCall,
+                    onPressed: controller.submitCreateProperty,
                     title: Strings.submit,
                   ),
                 ],

@@ -5,15 +5,10 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:task_for_isho/app/common/util/exports.dart';
 import 'package:task_for_isho/app/widgets/custom_appbar_widget.dart';
-import 'package:task_for_isho/app/widgets/custom_image_widget.dart';
-import 'package:task_for_isho/app/widgets/custom_inkwell_widget.dart';
 import 'package:task_for_isho/app/widgets/custom_space_widget.dart';
-import 'package:task_for_isho/app/widgets/custom_text_button.dart';
-import 'package:task_for_isho/app/widgets/custom_text_field_widget.dart';
 import 'package:task_for_isho/app/widgets/custom_text_widget.dart';
 import 'package:task_for_isho/features/property/controllers/property_controller.dart';
 import 'package:task_for_isho/features/property/widgets/property_image_slider_widget.dart';
-import 'package:task_for_isho/features/property/widgets/property_item_widget.dart';
 
 class ViewProperty extends GetView<PropertyController> {
   const ViewProperty({Key? key}) : super(key: key);
@@ -30,13 +25,14 @@ class ViewProperty extends GetView<PropertyController> {
         body: Obx(
           () => SafeArea(
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   PropertyImageSliderWidget(
                     slider: controller.selectedProperty.value.images ?? [],
                   ),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
                         CustomTextWidget(
@@ -58,7 +54,7 @@ class ViewProperty extends GetView<PropertyController> {
                           isFullWidth: true,
                           align: TextAlign.right,
                         ),
-                        CustomSpaceWidget(
+                        const CustomSpaceWidget(
                           height: 10,
                         ),
                         ClipRRect(
@@ -69,6 +65,7 @@ class ViewProperty extends GetView<PropertyController> {
                               width: Get.width,
                               child: GoogleMap(
                                 mapType: MapType.normal,
+                                myLocationEnabled: true,
                                 initialCameraPosition: CameraPosition(
                                   target: LatLng(
                                       controller.selectedProperty.value.lat ??
@@ -77,12 +74,12 @@ class ViewProperty extends GetView<PropertyController> {
                                           0),
                                   zoom: 14,
                                 ),
-                                gestureRecognizers:
-                                    <Factory<OneSequenceGestureRecognizer>>[
-                                  new Factory<OneSequenceGestureRecognizer>(
-                                    () => new EagerGestureRecognizer(),
+                                gestureRecognizers: <
+                                    Factory<OneSequenceGestureRecognizer>>{
+                                  Factory<OneSequenceGestureRecognizer>(
+                                    () => EagerGestureRecognizer(),
                                   ),
-                                ].toSet(),
+                                },
                                 markers: <Marker>{
                                   Marker(
                                     markerId: const MarkerId('SomeId'),

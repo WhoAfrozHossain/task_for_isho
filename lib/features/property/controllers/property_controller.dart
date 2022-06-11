@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
 import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:get/get.dart';
 import 'package:task_for_isho/app/common/constants.dart';
+import 'package:task_for_isho/app/common/util/exports.dart';
 import 'package:task_for_isho/app/models/property_model.dart';
 import 'package:task_for_isho/app/models/user_model.dart';
 import 'package:task_for_isho/app/routes/app_pages.dart';
@@ -34,19 +36,20 @@ class PropertyController extends GetxController {
   var properties = [].obs;
 
   var selectedProperty = PropertyModel().obs;
+  var isLoading = false.obs;
 
   List<String> propertyImage = [];
   List<String> selectedImage = [];
   var totalImage = 0.obs;
 
-  Rx<LatLng> currentLocation = LatLng(37.42796133580664, -122.085749655962).obs;
+  Rx<LatLng> currentLocation = const LatLng(37.42796133580664, -122.085749655962).obs;
 
   Completer<GoogleMapController> mapController = Completer();
 
   CameraPosition? kGooglePlex;
 
   @override
-  onInit() {
+  onReady() {
     _auth = authController.auth;
     _firestore = authController.fireStore;
 
@@ -55,7 +58,7 @@ class PropertyController extends GetxController {
     getUserData();
     getPropertyList();
 
-    super.onInit();
+    super.onReady();
   }
 
   void selectProperty(PropertyModel item) {
@@ -66,11 +69,15 @@ class PropertyController extends GetxController {
 
   void getUserData() async {
     try {
+      Utils.loadingDialog();
+
       await _firestore
           .collection('users')
           .doc(_auth.currentUser?.uid)
           .get()
           .then((DocumentSnapshot documentSnapshot) {
+        Utils.closeDialog();
+
         if (documentSnapshot.exists) {
           user(UserModel.fromDocumentSnapshot(documentSnapshot));
         } else {
@@ -78,6 +85,8 @@ class PropertyController extends GetxController {
         }
       });
     } catch (e) {
+      Utils.closeDialog();
+
       print(e);
       rethrow;
     }
@@ -86,19 +95,28 @@ class PropertyController extends GetxController {
   Future getPropertyList() async {
     properties([]);
     try {
+      isLoading(true);
+      Utils.loadingDialog();
+
       await _firestore
           .collection('property')
           .where('user_id', isEqualTo: _auth.currentUser?.uid)
           .orderBy('time', descending: true)
           .get()
           .then((value) {
-        value.docs.forEach((element) {
+        Utils.closeDialog();
+
+        for (var element in value.docs) {
           PropertyModel item = PropertyModel.fromDocumentSnapshot(element);
           properties.add(item);
-        });
+        }
+        isLoading(false);
         return value.docs[0];
       });
     } catch (e) {
+      isLoading(false);
+      Utils.closeDialog();
+
       print(e);
     }
   }
@@ -183,6 +201,44 @@ class PropertyController extends GetxController {
     goToTheLake();
   }
 
+  String validationCreateProperty() {
+    String message = "";
+
+    if (propertyNameController.text.isEmpty) {
+      if (message.isEmpty) {
+        message = "Please enter title";
+      } else {
+        message = "$message\nPlease enter title";
+      }
+    }
+    if (rentController.text.isEmpty) {
+      if (message.isEmpty) {
+        message = "Please enter property rent";
+      } else {
+        message = "$message\nPlease enter property rent";
+      }
+    }
+    if (propertyImage.isEmpty) {
+      if (message.isEmpty) {
+        message = "Please select image";
+      } else {
+        message = "$message\nPlease select image";
+      }
+    }
+
+    return message;
+  }
+
+  void submitCreateProperty() {
+    String message = validationCreateProperty();
+
+    if (message.isEmpty) {
+      sslCommerzGeneralCall();
+    } else {
+      showErrorToast(message);
+    }
+  }
+
   Future<void> sslCommerzGeneralCall() async {
     Sslcommerz sslcommerz = Sslcommerz(
         initializer: SSLCommerzInitialization(
@@ -190,19 +246,18 @@ class PropertyController extends GetxController {
             ipn_url: "www.ipnurl.com",
             // multi_card_name: formData['multicard'],
             currency: SSLCurrencyType.BDT,
-            product_category: "Food",
+            product_category: "Test",
             sdkType: SSLCSdkType.TESTBOX,
             store_id: "afroz62a261f389205",
             store_passwd: "afroz62a261f389205@ssl",
-            total_amount: 10,
+            total_amount: double.parse(rentController.text),
             tran_id: "1231321321321312"));
 
     var result = await sslcommerz.payNow();
     if (result is PlatformException) {
-      print("the response is: " +
-          result.message.toString() +
-          " code: " +
-          result.code);
+      if (kDebugMode) {
+        print("the response is: ${result.message} code: ${result.code}");
+      }
     } else {
       SSLCTransactionInfoModel model = result;
       addProperty(model.toJson());
@@ -211,6 +266,8 @@ class PropertyController extends GetxController {
   }
 
   Future<String> uploadImageFile(File image) async {
+    Utils.loadingDialog();
+
     Reference storageRef = FirebaseStorage.instance
         .ref('PropertyImage/${DateTime.now().toString()}.jpg');
     TaskSnapshot uploadTask = await storageRef.putFile(
@@ -222,10 +279,14 @@ class PropertyController extends GetxController {
 
     String imageUri = await uploadTask.ref.getDownloadURL();
 
+    Utils.closeDialog();
+
     return imageUri;
   }
 
   void addProperty(var paymentData) async {
+    Utils.loadingDialog();
+
     String id = DateTime.now().millisecondsSinceEpoch.toString();
     selectedImage.clear();
 
@@ -251,12 +312,16 @@ class PropertyController extends GetxController {
         rentController.clear();
         totalImage(propertyImage.length);
 
+        Utils.closeDialog();
+
         Get.back();
 
         getPropertyList();
         getDeviceLocation();
       });
     } catch (e) {
+      Utils.closeDialog();
+
       print(e);
     }
   }

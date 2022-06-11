@@ -30,8 +30,8 @@ class PropertyList extends GetView<PropertyController> {
         onPressed: () {
           Get.toNamed(AppPages.ADD_PROPERTY);
         },
-        label: Text(Strings.addProperty),
-        icon: Icon(Icons.add_rounded),
+        label: const Text(Strings.addProperty),
+        icon: const Icon(Icons.add_rounded),
         backgroundColor: AppColors.kPrimaryColor,
       ),
       backgroundColor: AppColors.lightGray,
@@ -49,21 +49,32 @@ class PropertyList extends GetView<PropertyController> {
               const CustomSpaceWidget(
                 height: 20,
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: controller.properties.value.length,
-                separatorBuilder: (_, index) {
-                  return const CustomSpaceWidget(
-                    height: 15,
-                  );
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  return PropertyItemWidget(
-                    item: controller.properties[index],
-                  );
-                },
-              ),
+              controller.properties.value.isEmpty && !controller.isLoading.value
+                  ? const SizedBox(
+                      height: 300,
+                      child: Center(
+                        child: CustomTextWidget(
+                          text: "Not added any properties yet.",
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.properties.value.length,
+                      separatorBuilder: (_, index) {
+                        return const CustomSpaceWidget(
+                          height: 15,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return PropertyItemWidget(
+                          item: controller.properties[index],
+                        );
+                      },
+                    ),
             ]),
           ),
         ),

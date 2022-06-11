@@ -5,8 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:task_for_isho/firebase_options.dart';
-
 import '../../widgets/custom_error_widget.dart';
 
 class Initializer {
@@ -24,10 +22,6 @@ class Initializer {
     runZonedGuarded(() async {
       WidgetsFlutterBinding.ensureInitialized();
 
-      Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-
       FlutterError.onError = (details) {
         FlutterError.dumpErrorToConsole(details);
         printInfo(info: details.stack.toString());
@@ -42,6 +36,8 @@ class Initializer {
 
   Future<void> _initServices() async {
     try {
+      await _initFirebase();
+
       await _initStorage();
 
       _initScreenPreference();
@@ -49,6 +45,12 @@ class Initializer {
     } catch (err) {
       rethrow;
     }
+  }
+
+  Future<void> _initFirebase() async {
+    await Firebase.initializeApp(
+        // options: DefaultFirebaseOptions.currentPlatform,
+        );
   }
 
   Future<void> _initStorage() async {

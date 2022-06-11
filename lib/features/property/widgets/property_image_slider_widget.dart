@@ -21,7 +21,7 @@ class PropertyImageSliderWidget extends StatelessWidget {
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
         viewportFraction: 1,
-        reverse: true,
+        reverse: false,
         autoPlay: true,
       ),
       items: slider.map((String item) {

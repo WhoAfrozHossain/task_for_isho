@@ -34,22 +34,59 @@ class AuthController extends GetxController {
     }
   }
 
+  String validationLogin() {
+    String message = "";
+
+    if (emailController.text.isEmpty) {
+      if (message.isEmpty) {
+        message = "Please enter your email";
+      } else {
+        message = "$message\nPlease enter your email";
+      }
+    } else if (!GetUtils.isEmail(emailController.text)) {
+      if (message.isEmpty) {
+        message = "Please enter valid email";
+      } else {
+        message = "$message\nPlease enter valid email";
+      }
+    }
+    if (passwordController.text.isEmpty) {
+      if (message.isEmpty) {
+        message = "Please enter password";
+      } else {
+        message = "$message\nPlease enter password";
+      }
+    }
+
+    return message;
+  }
+
   void onLoginClick() async {
-    try {
-      await auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+    String message = validationLogin();
 
-      showSuccessToast('Successfully signed in');
+    if (message.isEmpty) {
+      try {
+        Utils.loadingDialog();
 
-      checkLoginStatus(false);
+        await auth.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
-      emailController.clear();
-      passwordController.clear();
-    } catch (e) {
-      print(e.toString());
-      showErrorToast('Error signing in');
+        emailController.clear();
+        passwordController.clear();
+
+        checkLoginStatus(false);
+
+        Utils.closeDialog();
+
+        showSuccessToast('Successfully signed in');
+      } catch (e) {
+        Utils.closeDialog();
+        showErrorToast('Error signing in');
+      }
+    } else {
+      showErrorToast(message);
     }
   }
 
@@ -104,6 +141,8 @@ class AuthController extends GetxController {
 
     if (message.isEmpty) {
       try {
+        Utils.loadingDialog();
+
         await auth
             .createUserWithEmailAndPassword(
           email: emailController.text,
@@ -117,17 +156,19 @@ class AuthController extends GetxController {
               'email': emailController.text,
             });
 
+            Utils.closeDialog();
+
             showSuccessToast('Successfully signed up');
 
             checkLoginStatus(false);
           } catch (e) {
-            print(e);
+            Utils.closeDialog();
 
             showErrorToast('Error signing up');
           }
         });
       } catch (e) {
-        print(e.toString());
+        Utils.closeDialog();
         showErrorToast('Error signing up');
       }
     } else {
@@ -136,27 +177,55 @@ class AuthController extends GetxController {
   }
 
   void onForgetPasswordClick() async {
-    try {
-      await auth.sendPasswordResetEmail(email: emailController.text);
+    String message = "";
 
-      showSuccessToast('Successfully mail sended');
+    if (emailController.text.isEmpty) {
+      if (message.isEmpty) {
+        message = "Please enter your email";
+      } else {
+        message = "$message\nPlease enter your email";
+      }
+    } else if (!GetUtils.isEmail(emailController.text)) {
+      if (message.isEmpty) {
+        message = "Please enter valid email";
+      } else {
+        message = "$message\nPlease enter valid email";
+      }
+    }
 
-      Get.back();
-    } catch (e) {
-      print(e.toString());
-      showErrorToast('Error reset password');
+    if (message.isEmpty) {
+      try {
+        Utils.closeDialog();
+
+        await auth.sendPasswordResetEmail(email: emailController.text);
+
+        Utils.closeDialog();
+
+        showSuccessToast('Successfully mail send');
+
+        Get.back();
+      } catch (e) {
+        Utils.closeDialog();
+        showErrorToast('Error reset password');
+      }
+    } else {
+      showErrorToast(message);
     }
   }
 
   void signOut() async {
     try {
+      Utils.closeDialog();
+
       await auth.signOut();
+
+      Utils.closeDialog();
 
       showSuccessToast('Successfully signed out');
 
       checkLoginStatus(true);
     } catch (e) {
-      print(e.toString());
+      Utils.closeDialog();
       showErrorToast('Error signing out');
     }
   }
