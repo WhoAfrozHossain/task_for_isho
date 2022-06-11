@@ -7,7 +7,9 @@ It's a task project for ISHO. This application developed using flutter and fireb
 
 ## Video
 
-- [Application Video](https://github.com/WhoAfrozHossain/task_for_isho/raw/master/files/video.mp4)
+<!-- - [Application Video](https://github.com/WhoAfrozHossain/task_for_isho/raw/master/files/video.mp4) -->
+
+https://user-images.githubusercontent.com/50153194/173189558-fb704c1d-a890-4ec7-adb7-35f5d7efe1e1.mp4
 
 ## Firebase Screenshots
 
