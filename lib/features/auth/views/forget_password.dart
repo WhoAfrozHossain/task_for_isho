@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:task_for_isho/app/common/util/exports.dart';
 import 'package:task_for_isho/features/auth/controllers/auth_controller.dart';
 import 'package:task_for_isho/app/widgets/custom_back_button.dart';
-import 'package:task_for_isho/app/widgets/custom_inkwell_widget.dart';
-import 'package:task_for_isho/app/widgets/custom_password_field.dart';
 import 'package:task_for_isho/app/widgets/custom_space_widget.dart';
 import 'package:task_for_isho/app/widgets/custom_text_field_widget.dart';
 import 'package:task_for_isho/app/widgets/custom_text_widget.dart';

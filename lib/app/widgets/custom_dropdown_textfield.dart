@@ -49,7 +49,7 @@ class CustomDropdownTextField<T> extends StatelessWidget {
                     value: value,
                     decoration: InputDecoration(
                       filled: true,
-                      hintText: value == null ? '' : item!(value!),
+                      hintText: value == null ? '' : item!(value as T),
                       labelText: title,
                       hintStyle: AppTextStyle.regularStyle.copyWith(
                         fontSize: textFontSize ?? Dimens.fontSize14,

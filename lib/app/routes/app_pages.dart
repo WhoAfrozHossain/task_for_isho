@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:task_for_isho/features/auth/bindings/auth_binding.dart';
 import 'package:task_for_isho/features/auth/views/forget_password.dart';
@@ -30,6 +32,7 @@ class AppPages {
     GetPage(
       name: _Paths.LOGIN,
       page: () => const Login(),
+      binding: AuthBinding(),
       transition: Transition.fade,
     ),
     GetPage(

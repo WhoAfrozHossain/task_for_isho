@@ -111,16 +111,16 @@ class Utils {
           ),
     ).then((v) {
       if (v != null) {
-        final _now = DateTime.now();
-        final _dateTime = DateTime(
-          _now.year,
-          _now.month,
-          _now.day,
+        final now = DateTime.now();
+        final dateTime = DateTime(
+          now.year,
+          now.month,
+          now.day,
           v.hour,
           v.minute,
         );
 
-        onSelectTime(_dateTime.formatedDate(dateFormat: 'hh:mm aa'));
+        onSelectTime(dateTime.formatedDate(dateFormat: 'hh:mm aa'));
       }
     });
   }
@@ -129,15 +129,15 @@ class Utils {
     int length, {
     bool isNumber = true,
   }) {
-    final _chars = isNumber ? '1234567890' : 'abcdefghijklmnopqrstuvwxyz';
-    final _rnd = Random();
+    final chars = isNumber ? '1234567890' : 'abcdefghijklmnopqrstuvwxyz';
+    final rnd = Random();
 
     return String.fromCharCodes(
       Iterable.generate(
         length,
-        (_) => _chars.codeUnitAt(
-          _rnd.nextInt(
-            _chars.length,
+        (_) => chars.codeUnitAt(
+          rnd.nextInt(
+            chars.length,
           ),
         ),
       ),
@@ -284,6 +284,7 @@ class Utils {
 
   static Future<File?> getImage({int source = 1}) async {
     File? image;
+    // ignore: unused_local_variable
     CroppedFile? croppedFile;
     final picker = ImagePicker();
 

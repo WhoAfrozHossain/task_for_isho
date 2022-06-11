@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:task_for_isho/app/common/util/exports.dart';
 import 'package:task_for_isho/app/models/property_model.dart';
 import 'package:task_for_isho/app/widgets/custom_image_widget.dart';
-import 'package:task_for_isho/app/widgets/custom_space_widget.dart';
 import 'package:task_for_isho/app/widgets/custom_text_widget.dart';
 import 'package:task_for_isho/features/property/controllers/property_controller.dart';
 
@@ -36,7 +35,7 @@ class PropertyItemWidget extends GetView<PropertyController> {
             Expanded(
                 flex: 2,
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

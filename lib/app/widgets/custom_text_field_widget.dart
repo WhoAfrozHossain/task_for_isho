@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:task_for_isho/app/common/util/exports.dart';
 import 'package:task_for_isho/app/common/util/validators.dart';
 
+// ignore: must_be_immutable
 class CustomTextFieldWidget extends StatelessWidget {
   final String? labelText, hintText;
   final String? initialValue, prefixText, suffixText;
@@ -84,7 +85,7 @@ class CustomTextFieldWidget extends StatelessWidget {
             ],
       decoration: InputDecoration(
         fillColor: fillColor,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         filled: fillColor != null,
         isDense: isDense,
         border: border,

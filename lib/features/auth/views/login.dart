@@ -47,33 +47,27 @@ class Login extends GetView<AuthController> {
                   padding: EdgeInsets.all(20.w),
                   child: Column(
                     children: [
-                      Container(
-                        // margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-                        child: CustomTextFieldWidget(
-                          controller: controller.emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          labelText: Strings.emailAddress,
-                          isDense: true,
-                          border: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.lightGray,
-                            ),
+                      CustomTextFieldWidget(
+                        controller: controller.emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        labelText: Strings.emailAddress,
+                        isDense: true,
+                        border: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.lightGray,
                           ),
                         ),
                       ),
                       Obx(
-                        () => Container(
-                          // margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: PasswordFieldWidget(
-                            controller: controller.passwordController,
-                            obscureText: controller.passwordObsecure.value,
-                            onObscureIconClick: controller.onObsecureClick,
-                            labelText: Strings.password,
-                            isDense: true,
-                            border: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppColors.lightGray,
-                              ),
+                        () => PasswordFieldWidget(
+                          controller: controller.passwordController,
+                          obscureText: controller.passwordObsecure.value,
+                          onObscureIconClick: controller.onObsecureClick,
+                          labelText: Strings.password,
+                          isDense: true,
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.lightGray,
                             ),
                           ),
                         ),

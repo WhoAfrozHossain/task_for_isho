@@ -66,7 +66,7 @@ class PasswordFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         fillColor: fillColor,
         filled: fillColor != null,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         isDense: isDense,
         border: border,
         enabledBorder: border,
